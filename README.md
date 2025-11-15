@@ -11,6 +11,17 @@ This is the full source code of the Minim extension for Chromium and Firefox bro
 
 visit https://minim.tulv.in/ for a preview.
 
+## Features
+- **Minimalist New Tab**: Clean, distraction-free interface
+- **Multiple Wallpaper Sources**: Choose from Photography, Colors, Gradients, or Local Files
+- **Curated Collections**: Access to 12+ Unsplash wallpaper categories
+- **Windows Wallpaper Integration**: Download wallpapers and set them as Windows desktop backgrounds with one click
+- **Customizable Widgets**: Time, weather, links, and more
+- **Auto-refresh**: Automatically change wallpapers at your preferred interval
+
+### 🪟 Windows Wallpaper Feature
+Minim now supports downloading wallpapers to use as your Windows desktop background! Click the download button (📥) when viewing a photography wallpaper to save it along with an auto-generated PowerShell script for easy setup. See [WINDOWS_WALLPAPER.md](WINDOWS_WALLPAPER.md) for detailed instructions.
+
 ## Build Instructions
 
 ### 1. Prerequisites
