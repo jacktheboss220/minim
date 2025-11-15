@@ -11,10 +11,11 @@ import { Settings } from "./Settings";
 import { WallpaperSurface } from "./wallpaper/WallpaperSurface";
 import { WidgetProvider } from "./widgets/GridLayoutContext";
 import { CategoryTypes, SourceTypes } from "./gql/graphql";
-import { mdiAlertDecagram, mdiCog, mdiFire, mdiShimmer } from "@mdi/js";
+import { mdiAlertDecagram, mdiCog, mdiDownload, mdiFire, mdiShimmer } from "@mdi/js";
 import { BottomBarButton } from "./components/BottomBarButton";
 import { WallpaperInfoSpinner } from "./WallpaperInfoSpinner";
 import { WidgetGrid } from "./widgets/WIdgetGrid";
+import { downloadAndPrepareForWindows, getWallpaperFilename } from "./wallpaper/windows-wallpaper";
 
 export function App() {
   const [tick, setTick] = useState(new Date().getTime());
@@ -63,6 +64,7 @@ export function App() {
                     setSettingsOpen={setSettingsOpen}
                     settingsOpen={settingsOpen}
                   />
+                  <DownloadWallpaperButton />
                   <RefreshWallpaperButton />
                   {/* <ResetAppButton /> */}
                 </div>
@@ -107,6 +109,35 @@ export const RefreshWallpaperButton = () => {
       }}
       tooltip="Refresh Wallpaper"
       icon={mdiShimmer}
+    />
+  ) : null;
+};
+
+export const DownloadWallpaperButton = () => {
+  const { background, meta, wallpaperCategory, wallpaperType } = useWallpaper();
+  const [downloading, setDownloading] = useState(false);
+
+  const handleDownload = async () => {
+    if (!background || wallpaperType !== "photography") return;
+    
+    setDownloading(true);
+    try {
+      const filename = getWallpaperFilename(meta, wallpaperCategory);
+      await downloadAndPrepareForWindows(background, filename, wallpaperCategory);
+    } catch (error) {
+      console.error('Download failed:', error);
+      alert('Failed to download wallpaper. Please try again.');
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  return wallpaperType === "photography" ? (
+    <BottomBarButton
+      disabled={downloading}
+      onClick={handleDownload}
+      tooltip="Download for Windows Wallpaper"
+      icon={mdiDownload}
     />
   ) : null;
 };
